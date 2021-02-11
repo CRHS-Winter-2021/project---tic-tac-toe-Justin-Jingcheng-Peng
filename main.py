@@ -3,7 +3,7 @@
 #Date:
 
 #1. (Var) Setup the empty board as a list
-theBoard = []
+theBoard = [" "," "," "," "," "," "," "," "," "," ",]
 
 #2. (fun) Print the board.
 #in: a 10 item list (either x, o or ' ')
@@ -11,23 +11,41 @@ theBoard = []
 #out: none
 
 def printBoard(board):
-    pass
+  print(theBoard[7] + '|' + theBoard[8] + '|' + theBoard[9])
+  print("-----")
+  print(theBoard[4] + '|' + theBoard[5] + '|' + theBoard[6])
+  print("-----")
+  print(theBoard[1] + '|' + theBoard[2] + '|' + theBoard[3])
+  
 
 #3a. (fun) Determine if player is X or O
-player1 = ''
-player2 = ''
+player1 = 'X'
+player2 = 'O'
 
 #in: None
 #do: get user choice, assign X/O to player1 and 2
 #out: None
 
 def chooseLetter():
-    pass
+  global player1
+  global player2
+  a = input('player1, type X/O')
+  if a == 'X':
+    player1 = 'X'
+    player2 = 'O'
+  else:
+    player1 = 'O'
+    player2 = 'X'
+  print('player1: ' + player1, "player2 " + player2)
 
 
 #3b. (fun) Choose starting player 1 or 2
 def chooseStart():
-    pass
+  a = int(input('Who to start?'))
+  if a == 1:
+    return 1
+  else:
+    return 2
 
 #4. (fun) Get player move
 #in: board as list, player as X or O
@@ -37,16 +55,28 @@ def chooseStart():
 #out: none
 
 def playerMove(board, player):
-    pass
+  choice = int(input("Which position?"))
+  if board[choice] == ' ':
+    board[choice] = player
+  else:
+    print('That is occupied')
+  printBoard(theBoard)
 
 
 #5. (fun) Check Winner
 #in: board as list, player as X or O
 #do: check all possible win scenarios
 #out: True for win, False otherwise
-    
+  
 def checkWin(board, player):
-    pass
+  global winner
+  if theBoard[1] == theBoard[2] == theBoard[3] == 'X' or theBoard[4] == theBoard[5] == theBoard[6] == 'X' or theBoard[7] == theBoard[8] == theBoard[9] == "X" or theBoard[1] == theBoard[4] == theBoard[7] == "X"or theBoard[2] == theBoard[5] == theBoard[8] == "X" or theBoard[3] == theBoard[6] == theBoard[9] == "X" or theBoard[3] == theBoard[5] == theBoard[7] == "X" or theBoard[1] == theBoard[5] == theBoard[9] == "X":
+    if player == 'X':
+      return True
+    
+   
+  else:
+    return False
 
 
 #6. (fun) Check if board is full
@@ -57,7 +87,10 @@ def checkWin(board, player):
 #out: return True if board is full, False otherwise
 
 def checkFull(board):
-    pass
+  if board.count(' ') == 1:
+    return True
+  else:
+    return False
 
 #7. Main function
 
@@ -80,6 +113,26 @@ def main():
         #print baord
         #check win
     
+  chooseLetter()
+  if chooseStart() == 2:
+    playerMove(theBoard, player2)
+  
+  while True:
+    playerMove(theBoard, player1)
+    if checkFull(theBoard) == True or checkWin(theBoard, player1) == True or checkWin(theBoard, player2) == True:
+      if checkFull(theBoard) == True:
+        print('Full, Game over')
+        return 0
+      elif checkWin(theBoard, player1) == True:
+        print('Player 1 wins , G.O.')
+        return 0
     
-    pass
-
+    playerMove(theBoard, player2)
+    if checkFull(theBoard) == True or checkWin(theBoard, player1) == True or checkWin(theBoard, player2) == True:
+      if checkFull(theBoard) == True:
+        print('Full, Game over')
+        return 0
+      elif checkWin(theBoard, player2) == True:
+        print('Player 1 wins , G.O.')
+        return 0
+     
