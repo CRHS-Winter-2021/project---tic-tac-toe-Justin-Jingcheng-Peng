@@ -29,7 +29,14 @@ player2 = 'O'
 def chooseLetter():
   global player1
   global player2
-  a = input('player1, type X/O')
+  a = input('player1, type X/O ')
+  while True:
+    if a == 'O' or a == 'X':
+      break
+    a = input('player1, type X/O ')
+    if a == 'O' or a == 'X':
+      break
+    
   if a == 'X':
     player1 = 'X'
     player2 = 'O'
@@ -41,8 +48,16 @@ def chooseLetter():
 
 #3b. (fun) Choose starting player 1 or 2
 def chooseStart():
-  a = int(input('Who to start?'))
-  if a == 1:
+
+  a = input('Who to start? ')
+  while True:
+    if a == '1' or a == '2':
+      break
+    a = input('Please return proper string. Who to start? ')
+    if a == '1' or a == '2':
+      break
+  
+  if a == '1':
     return 1
   else:
     return 2
@@ -55,11 +70,12 @@ def chooseStart():
 #out: none
 
 def playerMove(board, player):
-  choice = int(input("Which position?"))
+  choice = int(input("Which position? "))
+  while board[choice] != ' ':
+    print('That is occupied ')
+    choice = int(input("Which position? "))
   if board[choice] == ' ':
-    board[choice] = player
-  else:
-    print('That is occupied')
+      board[choice] = player  
   printBoard(theBoard)
 
 
@@ -69,14 +85,20 @@ def playerMove(board, player):
 #out: True for win, False otherwise
   
 def checkWin(board, player):
-  global winner
+  
   if theBoard[1] == theBoard[2] == theBoard[3] == 'X' or theBoard[4] == theBoard[5] == theBoard[6] == 'X' or theBoard[7] == theBoard[8] == theBoard[9] == "X" or theBoard[1] == theBoard[4] == theBoard[7] == "X"or theBoard[2] == theBoard[5] == theBoard[8] == "X" or theBoard[3] == theBoard[6] == theBoard[9] == "X" or theBoard[3] == theBoard[5] == theBoard[7] == "X" or theBoard[1] == theBoard[5] == theBoard[9] == "X":
     if player == 'X':
       return True
-    
+    else:
+      return False
+  elif theBoard[1] == theBoard[2] == theBoard[3] == 'O' or theBoard[4] == theBoard[5] == theBoard[6] == 'O' or theBoard[7] == theBoard[8] == theBoard[9] == "O" or theBoard[1] == theBoard[4] == theBoard[7] == "O"or theBoard[2] == theBoard[5] == theBoard[8] == "O" or theBoard[3] == theBoard[6] == theBoard[9] == "O" or theBoard[3] == theBoard[5] == theBoard[7] == "O" or theBoard[1] == theBoard[5] == theBoard[9] == "O":
+    if player == 'O':
+      return True
+    else:
+      return False
+         
    
-  else:
-    return False
+  
 
 
 #6. (fun) Check if board is full
@@ -112,27 +134,34 @@ def main():
         #player chooses move
         #print baord
         #check win
-    
+  currentplayer = ''  
   chooseLetter()
   if chooseStart() == 2:
+    currentplayer = 2
+    print('Player ' + str(currentplayer) + " 's turn ")
     playerMove(theBoard, player2)
+    
   
   while True:
+    currentplayer = 1
+    print('Player ' + str(currentplayer) + " 's turn")
     playerMove(theBoard, player1)
-    if checkFull(theBoard) == True or checkWin(theBoard, player1) == True or checkWin(theBoard, player2) == True:
-      if checkFull(theBoard) == True:
-        print('Full, Game over')
-        return 0
-      elif checkWin(theBoard, player1) == True:
-        print('Player 1 wins , G.O.')
-        return 0
+    if checkWin(theBoard, player1) == True:
+      print('player1 wins, game over')
+      return 0
+    elif checkFull(theBoard) == True:
+      print('Full, Game Over')
+      return 0
     
+    currentplayer = 2
+    print('Player ' + str(currentplayer) + " 's turn")
     playerMove(theBoard, player2)
-    if checkFull(theBoard) == True or checkWin(theBoard, player1) == True or checkWin(theBoard, player2) == True:
-      if checkFull(theBoard) == True:
-        print('Full, Game over')
-        return 0
-      elif checkWin(theBoard, player2) == True:
-        print('Player 1 wins , G.O.')
-        return 0
-     
+    if checkWin(theBoard, player2) == True:
+      print('player2 wins, game over')
+      return 0
+    elif checkFull(theBoard) == True:
+      print('Full, Game Over')
+      return 0
+
+main()
+    
