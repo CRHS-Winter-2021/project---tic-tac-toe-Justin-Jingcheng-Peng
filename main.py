@@ -9,6 +9,16 @@ theBoard = [" "," "," "," "," "," "," "," "," "," ",]
 #in: a 10 item list (either x, o or ' ')
 #do: print a graphic for the board
 #out: none
+def print_ins():
+
+  print('Welcome to tic-tac-toe game. Here is the position of the board')
+  print('7' + '|' + '8' + '|' + '9')
+  print("-----")
+  print('4' + '|' + '5' + '|' + '6')
+  print("-----")
+  print('1' + '|' + '2' + '|' + '3')
+  print('The game is easy. All you need to do is typing the position you want to put')
+  print()
 
 def printBoard(board):
   print(theBoard[7] + '|' + theBoard[8] + '|' + theBoard[9])
@@ -29,10 +39,11 @@ player2 = 'O'
 def chooseLetter():
   global player1
   global player2
-  a = input('player1, type X/O ')
+  a = input('player1, please choose your letter, type X/O ')
   while True:
     if a == 'O' or a == 'X':
       break
+    print('Type proper string')
     a = input('player1, type X/O ')
     if a == 'O' or a == 'X':
       break
@@ -43,13 +54,14 @@ def chooseLetter():
   else:
     player1 = 'O'
     player2 = 'X'
-  print('player1: ' + player1, "player2 " + player2)
+  print()
+  print('player1: ' + player1, "player2: " + player2)
 
 
 #3b. (fun) Choose starting player 1 or 2
 def chooseStart():
 
-  a = input('Who to start? ')
+  a = input('Who to start? Type 1/2 ')
   while True:
     if a == '1' or a == '2':
       break
@@ -70,10 +82,17 @@ def chooseStart():
 #out: none
 
 def playerMove(board, player):
-  choice = int(input("Which position? "))
+  nums = ["1","2","3","4","5","6","7","8","9"]
+  choice = input("Which position? ")
+  while choice not in nums:
+    choice = input('Wrong input! Which position? ')
+  choice = int(choice)
   while board[choice] != ' ':
     print('That is occupied ')
-    choice = int(input("Which position? "))
+    choice = input("Which position? ")
+    while choice not in nums:
+      choice = input('Wrong input! Which position? ')
+    choice = int(choice)
   if board[choice] == ' ':
       board[choice] = player  
   printBoard(theBoard)
@@ -134,6 +153,7 @@ def main():
         #player chooses move
         #print baord
         #check win
+  print_ins()
   currentplayer = ''  
   chooseLetter()
   if chooseStart() == 2:
